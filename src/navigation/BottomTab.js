@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import TopicsScreen from '../screens/TopicsScreen';
+import MainStack from './MainStack';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 const BottomTab = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={TopicsScreen} />
+      <Tab.Screen name="Main" component={MainStack} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
