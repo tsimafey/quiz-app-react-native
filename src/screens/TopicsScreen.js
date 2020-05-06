@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 20,
     color: colors.lightColor,
+    fontFamily: 'Manrope-Regular',
   },
 });
 
