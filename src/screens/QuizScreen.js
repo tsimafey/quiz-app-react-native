@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 import {db} from '../firebase';
 
@@ -14,52 +15,55 @@ import globalStyles, {colors} from '../styles';
 
 const QuizScreen = () => {
   const [questionsArray, setQuestionsArray] = useState([]);
+  const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
 
   useEffect(() => {
     db.collection('questions-nba')
-      .orderBy('question')
-      .limit(20)
+      .orderBy('randomId')
+      .limit(10)
       .get()
       .then((snapshot) => {
         const newArray = [];
         snapshot.forEach((doc) => {
-          newArray.push(doc.data());
+          newArray.push({id: doc.id, ...doc.data()});
         });
         setQuestionsArray(newArray);
       });
   }, []);
 
+  const assignNewId = (number) => {
+    db.collection('questions-nba').doc(`${questionsArray[number].id}`).update({
+      randomId: uuidv4(),
+    });
+  };
+
+  const handleAnswer = (answer) => {
+    if (answer.isTrue) {
+      assignNewId(thisQuestionNumber);
+      setThisQuestionNumber(thisQuestionNumber + 1);
+    }
+  };
+
+  const renderAnswers = questionsArray[thisQuestionNumber]?.answers.map(
+    (answer) => (
+      <TouchableWithoutFeedback onPress={() => handleAnswer(answer)}>
+        <View style={styles.answerButton}>
+          <Text style={styles.answerText}>{answer.text}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    ),
+  );
+
   return (
     <SafeAreaView style={globalStyles.container}>
-      {questionsArray[0] && (
+      {questionsArray[thisQuestionNumber] && (
         <>
           <View style={styles.questionBlock}>
             <Text style={styles.questionText}>
-              {questionsArray[0].question}
+              {questionsArray[thisQuestionNumber].question}
             </Text>
           </View>
-          <View style={styles.answersBlock}>
-            <TouchableWithoutFeedback>
-              <View style={styles.answerButton}>
-                <Text style={styles.answerText}>1</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
-              <View style={styles.answerButton}>
-                <Text style={styles.answerText}>2</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
-              <View style={styles.answerButton}>
-                <Text style={styles.answerText}>3</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
-              <View style={styles.answerButton}>
-                <Text style={styles.answerText}>4</Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
+          <View style={styles.answersBlock}>{renderAnswers}</View>
         </>
       )}
     </SafeAreaView>
