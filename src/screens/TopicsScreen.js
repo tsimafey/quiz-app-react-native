@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+
+import {db} from '../firebase';
 
 import {
   SafeAreaView,
@@ -14,15 +16,18 @@ import {
 import globalStyles, {colors} from '../styles';
 import icons from '../../assets/images/icons/topics';
 
-const topicsData = [
-  {id: 'nba', title: 'NBA'},
-  {id: 'atp', title: 'ATP Tour'},
-  {id: 'soccer', title: 'Soccer'},
-  {id: 'mlb', title: 'MLB'},
-];
-
 const TopicsScreen = ({navigation}) => {
-  const [topics] = useState(topicsData);
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    const unsub = db.collection('topics').onSnapshot((snapshot) => {
+      const topicsArray = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setTopics(topicsArray);
+    });
+    return () => unsub();
+  }, []);
 
   const navigateToQuiz = (id) =>
     navigation.navigate('Quiz', {
