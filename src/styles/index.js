@@ -5,6 +5,8 @@ export const colors = {
   darkColor: 'hsl(228, 8%, 12%)',
   lightColor: 'hsl(240, 10%, 85%)',
   highlightColor: 'hsl(45, 99%, 71%)',
+  positiveColor: 'hsl(90, 80%, 30%)',
+  negativeColor: 'hsl(0, 75%, 40%)',
 };
 
 const globalStyles = StyleSheet.create({

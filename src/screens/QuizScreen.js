@@ -8,6 +8,7 @@ import {db} from '../firebase';
 import {
   SafeAreaView,
   View,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Text,
   StyleSheet,
@@ -35,7 +36,10 @@ const QuizScreen = () => {
       })
       .then((newQuestionsArray) => {
         return newQuestionsArray.map((question) => {
-          question.answers = _.shuffle(question.answers);
+          question.answers = _.shuffle(question.answers).map((answer) => ({
+            ...answer,
+            isDisabled: false,
+          }));
           return question;
         });
       })
@@ -52,21 +56,57 @@ const QuizScreen = () => {
       });
   };
 
+  const disableAnswer = (answer) => {
+    const newAnswers = questionsArray[thisQuestionNumber].answers.map((a) => {
+      if (a.text === answer.text) {
+        a.isDisabled = true;
+      }
+      return a;
+    });
+    setQuestionsArray([
+      ...questionsArray.slice(0, thisQuestionNumber),
+      {...questionsArray[thisQuestionNumber], answers: newAnswers},
+      ...questionsArray.slice(thisQuestionNumber + 1),
+    ]);
+  };
+
   const handleAnswer = (answer) => {
+    disableAnswer(answer);
     if (answer.isTrue) {
-      assignNewId(thisQuestionNumber);
-      setThisQuestionNumber(thisQuestionNumber + 1);
+      const handleTrueAnswer = () => {
+        assignNewId(thisQuestionNumber);
+        setThisQuestionNumber(thisQuestionNumber + 1);
+      };
+      setTimeout(handleTrueAnswer, 100);
     }
   };
 
   const renderAnswers = questionsArray[thisQuestionNumber]?.answers.map(
-    (answer) => (
-      <TouchableWithoutFeedback onPress={() => handleAnswer(answer)}>
-        <View style={styles.answerButton}>
-          <Text style={styles.answerText}>{answer.text}</Text>
-        </View>
-      </TouchableWithoutFeedback>
-    ),
+    (answer) => {
+      if (answer.isDisabled === false) {
+        return (
+          <TouchableOpacity
+            key={answer.text}
+            onPress={() => handleAnswer(answer)}
+            style={styles.answerButton}>
+            <Text style={styles.answerText}>{answer.text}</Text>
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableWithoutFeedback key={answer.text}>
+            <View
+              style={
+                answer.isTrue
+                  ? [styles.answerButton, styles.answerButtonRight]
+                  : [styles.answerButton, styles.answerButtonWrong]
+              }>
+              <Text style={styles.answerText}>{answer.text}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        );
+      }
+    },
   );
 
   return (
@@ -117,6 +157,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkColor,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  answerButtonRight: {
+    backgroundColor: colors.positiveColor,
+  },
+  answerButtonWrong: {
+    backgroundColor: colors.negativeColor,
   },
   answerText: {
     fontSize: 24,
