@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import {useRoute} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
+import _ from 'lodash';
 
 import {db} from '../firebase';
 
@@ -14,27 +16,40 @@ import {
 import globalStyles, {colors} from '../styles';
 
 const QuizScreen = () => {
+  const route = useRoute();
+  const {topic} = route.params;
   const [questionsArray, setQuestionsArray] = useState([]);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
 
   useEffect(() => {
-    db.collection('questions-nba')
+    db.collection(`questions-${topic}`)
       .orderBy('randomId')
       .limit(10)
       .get()
       .then((snapshot) => {
-        const newArray = [];
+        const newQuestionsArray = [];
         snapshot.forEach((doc) => {
-          newArray.push({id: doc.id, ...doc.data()});
+          newQuestionsArray.push({id: doc.id, ...doc.data()});
         });
-        setQuestionsArray(newArray);
+        return newQuestionsArray;
+      })
+      .then((newQuestionsArray) => {
+        return newQuestionsArray.map((question) => {
+          question.answers = _.shuffle(question.answers);
+          return question;
+        });
+      })
+      .then((newQuestionsArrayShuffled) => {
+        setQuestionsArray(newQuestionsArrayShuffled);
       });
-  }, []);
+  }, [topic]);
 
   const assignNewId = (number) => {
-    db.collection('questions-nba').doc(`${questionsArray[number].id}`).update({
-      randomId: uuidv4(),
-    });
+    db.collection(`questions-${topic}`)
+      .doc(`${questionsArray[number].id}`)
+      .update({
+        randomId: uuidv4(),
+      });
   };
 
   const handleAnswer = (answer) => {
