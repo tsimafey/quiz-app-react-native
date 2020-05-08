@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
-import _ from 'lodash';
 
 import {db} from '../firebase';
 
@@ -14,39 +13,15 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import useQuestionsArray from '../hooks/useQuestionsArray';
+
 import globalStyles, {colors} from '../styles';
 
 const QuizScreen = () => {
   const route = useRoute();
   const {topic} = route.params;
-  const [questionsArray, setQuestionsArray] = useState([]);
+  const [questionsArray, setQuestionsArray] = useQuestionsArray(topic);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
-
-  useEffect(() => {
-    db.collection(`questions-${topic}`)
-      .orderBy('randomId')
-      .limit(10)
-      .get()
-      .then((snapshot) => {
-        const newQuestionsArray = [];
-        snapshot.forEach((doc) => {
-          newQuestionsArray.push({id: doc.id, ...doc.data()});
-        });
-        return newQuestionsArray;
-      })
-      .then((newQuestionsArray) => {
-        return newQuestionsArray.map((question) => {
-          question.answers = _.shuffle(question.answers).map((answer) => ({
-            ...answer,
-            isDisabled: false,
-          }));
-          return question;
-        });
-      })
-      .then((newQuestionsArrayShuffled) => {
-        setQuestionsArray(newQuestionsArrayShuffled);
-      });
-  }, [topic]);
 
   const assignNewId = (number) => {
     db.collection(`questions-${topic}`)
