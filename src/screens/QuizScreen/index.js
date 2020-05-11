@@ -2,27 +2,29 @@ import React, {useState, useLayoutEffect} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
 
-import {db} from '../firebase';
+import {db} from '../../firebase';
 
 import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
-import useQuestionsArray from '../hooks/useQuestionsArray';
+import useQuestionsArray from '../../hooks/useQuestionsArray';
 
-import Answer from '../components/Answer';
-import Header from '../navigation/Header';
+import Answer from '../../components/Answer';
+import QuizScreenHeader from './QuizScreenHeader';
 
-import globalStyles, {colors} from '../styles';
+import globalStyles, {colors} from '../../styles';
 
 const QuizScreen = () => {
-  const navigation = useNavigation();
+  const mainStackNavigation = useNavigation();
   const route = useRoute();
   const {topic} = route.params;
   const [questionsArray, setQuestionsArray] = useQuestionsArray(topic);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: <Header />,
+    mainStackNavigation.setOptions({
+      header: ({navigation}) => (
+        <QuizScreenHeader score={0} navigation={navigation} />
+      ),
     });
   });
 
@@ -55,7 +57,7 @@ const QuizScreen = () => {
         assignNewId(thisQuestionNumber);
         setThisQuestionNumber(thisQuestionNumber + 1);
       };
-      setTimeout(handleTrueAnswer, 100);
+      setTimeout(handleTrueAnswer, 50);
     }
   };
 

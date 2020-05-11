@@ -21,6 +21,13 @@ const globalStyles = StyleSheet.create({
     backgroundColor: colors.primaryColor,
     alignItems: 'center',
   },
+  headerText: {
+    fontFamily: fonts.primaryFont,
+    textTransform: 'uppercase',
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: colors.lightColor,
+  },
   questionsText: {
     fontSize: 22,
     fontFamily: fonts.primaryFont,

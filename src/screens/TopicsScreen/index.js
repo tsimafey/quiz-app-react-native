@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 import {db} from '../../firebase';
 
@@ -19,11 +20,12 @@ import TopicsScreenHeader from './TopicsScreenHeader';
 import globalStyles, {colors, fonts} from '../../styles';
 import icons from '../../../assets/images/icons/topics';
 
-const TopicsScreen = ({navigation}) => {
+const TopicsScreen = () => {
+  const mainStackNavigation = useNavigation();
   const [topics, setTopics] = useState([]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    mainStackNavigation.setOptions({
       header: () => <TopicsScreenHeader />,
     });
   });
@@ -39,7 +41,7 @@ const TopicsScreen = ({navigation}) => {
   }, []);
 
   const navigateToQuiz = (id) =>
-    navigation.navigate('Quiz', {
+    mainStackNavigation.navigate('Quiz', {
       topic: id,
     });
 

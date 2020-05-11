@@ -3,23 +3,20 @@ import {Text, StyleSheet} from 'react-native';
 
 import Header from '../../navigation/Header';
 
-import {colors, fonts} from '../../styles';
+import globalStyles, {colors, fonts} from '../../styles';
 
 const TopicsScreenHeader = () => {
   return (
     <Header>
-      <Text style={styles.headerTitle}>Sports Trivia</Text>
+      <Text style={[globalStyles.headerText, styles.headerTitleText]}>
+        Sports Trivia
+      </Text>
     </Header>
   );
 };
 
 const styles = StyleSheet.create({
-  headerTitle: {
-    fontFamily: fonts.primaryFont,
-    textTransform: 'uppercase',
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: colors.lightColor,
+  headerTitleText: {
     textAlign: 'center',
   },
 });

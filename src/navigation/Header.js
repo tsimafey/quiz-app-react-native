@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.highlightColor,
     height: 50,
     display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 });
