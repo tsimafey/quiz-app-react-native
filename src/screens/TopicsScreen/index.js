@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 
-import {db} from '../firebase';
+import {db} from '../../firebase';
 
 import {
   SafeAreaView,
@@ -14,11 +14,19 @@ import {
   Platform,
 } from 'react-native';
 
-import globalStyles, {colors} from '../styles';
-import icons from '../../assets/images/icons/topics';
+import TopicsScreenHeader from './TopicsScreenHeader';
+
+import globalStyles, {colors, fonts} from '../../styles';
+import icons from '../../../assets/images/icons/topics';
 
 const TopicsScreen = ({navigation}) => {
   const [topics, setTopics] = useState([]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => <TopicsScreenHeader />,
+    });
+  });
 
   useEffect(() => {
     const unsub = db.collection('topics').onSnapshot((snapshot) => {
@@ -95,7 +103,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 20,
     color: colors.lightColor,
-    fontFamily: 'Manrope-Regular',
+    fontFamily: fonts.primaryFont,
   },
 });
 

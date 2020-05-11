@@ -9,6 +9,10 @@ export const colors = {
   negativeColor: 'hsl(0, 75%, 40%)',
 };
 
+export const fonts = {
+  primaryFont: 'Manrope-Regular',
+};
+
 const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -19,7 +23,7 @@ const globalStyles = StyleSheet.create({
   },
   questionsText: {
     fontSize: 22,
-    fontFamily: 'Manrope-Regular',
+    fontFamily: fonts.primaryFont,
     color: colors.lightColor,
     textAlign: 'center',
   },

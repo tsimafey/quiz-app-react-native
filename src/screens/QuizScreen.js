@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useRoute} from '@react-navigation/native';
+import React, {useState, useLayoutEffect} from 'react';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
 
 import {db} from '../firebase';
@@ -9,14 +9,22 @@ import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 import useQuestionsArray from '../hooks/useQuestionsArray';
 
 import Answer from '../components/Answer';
+import Header from '../navigation/Header';
 
 import globalStyles, {colors} from '../styles';
 
 const QuizScreen = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const {topic} = route.params;
   const [questionsArray, setQuestionsArray] = useQuestionsArray(topic);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: <Header />,
+    });
+  });
 
   const assignNewId = (number) => {
     db.collection(`questions-${topic}`)
