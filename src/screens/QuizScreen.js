@@ -4,16 +4,11 @@ import {v4 as uuidv4} from 'uuid';
 
 import {db} from '../firebase';
 
-import {
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
 import useQuestionsArray from '../hooks/useQuestionsArray';
+
+import Answer from '../components/Answer';
 
 import globalStyles, {colors} from '../styles';
 
@@ -56,40 +51,18 @@ const QuizScreen = () => {
     }
   };
 
-  const renderAnswers = questionsArray[thisQuestionNumber]?.answers.map(
-    (answer) => {
-      if (answer.isDisabled === false) {
-        return (
-          <TouchableOpacity
-            key={answer.text}
-            onPress={() => handleAnswer(answer)}
-            style={styles.answerButton}>
-            <Text style={styles.answerText}>{answer.text}</Text>
-          </TouchableOpacity>
-        );
-      } else {
-        return (
-          <TouchableWithoutFeedback key={answer.text}>
-            <View
-              style={
-                answer.isTrue
-                  ? [styles.answerButton, styles.answerButtonRight]
-                  : [styles.answerButton, styles.answerButtonWrong]
-              }>
-              <Text style={styles.answerText}>{answer.text}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        );
-      }
-    },
-  );
+  const renderAnswers = questionsArray[
+    thisQuestionNumber
+  ]?.answers.map((answer) => (
+    <Answer answer={answer} handleAnswer={handleAnswer} key={answer.text} />
+  ));
 
   return (
     <SafeAreaView style={globalStyles.container}>
       {questionsArray[thisQuestionNumber] && (
         <>
           <View style={styles.questionBlock}>
-            <Text style={styles.questionText}>
+            <Text style={globalStyles.questionsText}>
               {questionsArray[thisQuestionNumber].question}
             </Text>
           </View>
@@ -104,45 +77,18 @@ const styles = StyleSheet.create({
   questionBlock: {
     flex: 1,
     width: '95%',
+    marginTop: Platform.OS === 'android' ? 0 : 10,
     margin: 10,
     borderWidth: 3,
     borderRadius: 10,
     borderColor: colors.highlightColor,
     backgroundColor: colors.darkColor,
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  questionText: {
-    fontSize: 24,
-    fontFamily: 'Manrope-Regular',
-    color: colors.lightColor,
   },
   answersBlock: {
     flex: 1,
     width: '95%',
     display: 'flex',
-  },
-  answerButton: {
-    width: '100%',
-    height: '20%',
-    marginTop: 10,
-    borderWidth: 3,
-    borderRadius: 10,
-    borderColor: colors.highlightColor,
-    backgroundColor: colors.darkColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  answerButtonRight: {
-    backgroundColor: colors.positiveColor,
-  },
-  answerButtonWrong: {
-    backgroundColor: colors.negativeColor,
-  },
-  answerText: {
-    fontSize: 24,
-    fontFamily: 'Manrope-Regular',
-    color: colors.lightColor,
   },
 });
 

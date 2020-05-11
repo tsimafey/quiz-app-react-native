@@ -13,8 +13,15 @@ const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 25 : 0,
+    paddingBottom: Platform.OS === 'android' ? 25 : 0,
     backgroundColor: colors.primaryColor,
     alignItems: 'center',
+  },
+  questionsText: {
+    fontSize: 22,
+    fontFamily: 'Manrope-Regular',
+    color: colors.lightColor,
+    textAlign: 'center',
   },
 });
 

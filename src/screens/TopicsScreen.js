@@ -11,6 +11,7 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  Platform,
 } from 'react-native';
 
 import globalStyles, {colors} from '../styles';
@@ -66,7 +67,7 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   list: {
     width: '100%',
-    margin: 20,
+    margin: Platform.OS === 'android' ? 0 : 20,
   },
   listItem: {
     width: windowWidth / 3,
