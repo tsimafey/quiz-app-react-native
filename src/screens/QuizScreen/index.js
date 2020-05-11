@@ -19,11 +19,13 @@ const QuizScreen = () => {
   const {topic} = route.params;
   const [questionsArray, setQuestionsArray] = useQuestionsArray(topic);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
+  const [score, setScore] = useState(0);
+  const [maxScoreForAnswer, setMaxScoreForAnswer] = useState(3);
 
   useLayoutEffect(() => {
     mainStackNavigation.setOptions({
       header: ({navigation}) => (
-        <QuizScreenHeader score={0} navigation={navigation} />
+        <QuizScreenHeader score={score} navigation={navigation} />
       ),
     });
   });
@@ -54,10 +56,14 @@ const QuizScreen = () => {
     disableAnswer(answer);
     if (answer.isTrue) {
       const handleTrueAnswer = () => {
+        setScore(score + maxScoreForAnswer);
         assignNewId(thisQuestionNumber);
         setThisQuestionNumber(thisQuestionNumber + 1);
+        setMaxScoreForAnswer(3);
       };
       setTimeout(handleTrueAnswer, 50);
+    } else {
+      setMaxScoreForAnswer(maxScoreForAnswer - 1);
     }
   };
 
