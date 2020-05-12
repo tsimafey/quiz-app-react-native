@@ -1,10 +1,14 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, SafeAreaView} from 'react-native';
 
 import {colors} from '../styles';
 
 const Header = ({children}) => {
-  return <View style={styles.headerBlock}>{children}</View>;
+  return (
+    <SafeAreaView>
+      <View style={styles.headerBlock}>{children}</View>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({

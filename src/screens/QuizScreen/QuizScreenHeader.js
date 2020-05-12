@@ -16,8 +16,8 @@ const QuizScreenHeader = ({score, navigation}) => {
     <Header>
       <View style={styles.quizScreenHeaderBlock}>
         <Text style={globalStyles.headerText}>Score: {score}</Text>
-        <TouchableOpacity onPress={navigation.goBack}>
-          <Text style={styles.cross}>&#xd7;</Text>
+        <TouchableOpacity style={styles.crossBlock} onPress={navigation.goBack}>
+          <Text style={styles.crossText}>&#xd7;</Text>
         </TouchableOpacity>
       </View>
     </Header>
@@ -35,8 +35,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  cross: {
-    paddingBottom: 5,
+  crossBlock: {
+    top: -8,
+  },
+  crossText: {
     color: colors.lightColor,
     fontSize: 50,
   },
