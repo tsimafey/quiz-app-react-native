@@ -7,8 +7,10 @@ const useQuestionsArray = (topic) => {
   const [questionsArray, setQuestionsArray] = useState([]);
 
   useEffect(() => {
+    const desc = Math.random() * 10 > 5;
+
     db.collection(`questions-${topic}`)
-      .orderBy('randomId')
+      .orderBy('randomId', desc ? 'desc' : 'asc')
       .limit(10)
       .get()
       .then((snapshot) => {
