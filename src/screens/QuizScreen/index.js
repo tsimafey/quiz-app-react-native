@@ -18,6 +18,7 @@ const QuizScreen = () => {
   const mainStackNavigation = useNavigation();
   const route = useRoute();
   const {topic} = route.params;
+  const questionsNumber = 10;
   const [questionsArray, setQuestionsArray] = useQuestionsArray(topic);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
@@ -33,7 +34,7 @@ const QuizScreen = () => {
   });
 
   useEffect(() => {
-    if (thisQuestionNumber > 9) {
+    if (thisQuestionNumber > questionsNumber - 1) {
       setIsFinalModalVisible(true);
     }
   }, [thisQuestionNumber]);
