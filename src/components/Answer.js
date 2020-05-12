@@ -16,7 +16,7 @@ const Answer = ({answer, handleAnswer}) => {
       <TouchableOpacity
         onPress={() => handleAnswer(answer)}
         style={styles.answerButton}>
-        <Text style={globalStyles.questionsText}>{answer.text}</Text>
+        <Text style={globalStyles.primaryText}>{answer.text}</Text>
       </TouchableOpacity>
     );
   } else {
@@ -28,7 +28,7 @@ const Answer = ({answer, handleAnswer}) => {
               ? [styles.answerButton, styles.answerButtonRight]
               : [styles.answerButton, styles.answerButtonWrong]
           }>
-          <Text style={globalStyles.questionsText}>{answer.text}</Text>
+          <Text style={globalStyles.primaryText}>{answer.text}</Text>
         </View>
       </TouchableWithoutFeedback>
     );

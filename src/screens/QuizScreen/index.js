@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
 
@@ -10,6 +10,7 @@ import useQuestionsArray from '../../hooks/useQuestionsArray';
 
 import Answer from '../../components/Answer';
 import QuizScreenHeader from './QuizScreenHeader';
+import FinalScoreModal from './FinalScoreModal';
 
 import globalStyles, {colors} from '../../styles';
 
@@ -21,6 +22,7 @@ const QuizScreen = () => {
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
   const [maxScoreForAnswer, setMaxScoreForAnswer] = useState(3);
+  const [isFinalModalVisible, setIsFinalModalVisible] = useState(false);
 
   useLayoutEffect(() => {
     mainStackNavigation.setOptions({
@@ -29,6 +31,12 @@ const QuizScreen = () => {
       ),
     });
   });
+
+  useEffect(() => {
+    if (thisQuestionNumber > 9) {
+      setIsFinalModalVisible(true);
+    }
+  }, [thisQuestionNumber]);
 
   const assignNewId = (number) => {
     db.collection(`questions-${topic}`)
@@ -73,20 +81,38 @@ const QuizScreen = () => {
     <Answer answer={answer} handleAnswer={handleAnswer} key={answer.text} />
   ));
 
-  return (
-    <SafeAreaView style={globalStyles.container}>
-      {questionsArray[thisQuestionNumber] && (
-        <>
-          <View style={styles.questionBlock}>
-            <Text style={globalStyles.questionsText}>
-              {questionsArray[thisQuestionNumber].question}
-            </Text>
-          </View>
-          <View style={styles.answersBlock}>{renderAnswers}</View>
-        </>
-      )}
-    </SafeAreaView>
-  );
+  const closeModal = () => {
+    setIsFinalModalVisible(false);
+  };
+
+  if (isFinalModalVisible) {
+    return (
+      <SafeAreaView style={globalStyles.container}>
+        <FinalScoreModal
+          isVisible={isFinalModalVisible}
+          score={score}
+          navigation={mainStackNavigation}
+          route={route}
+          closeModal={closeModal}
+        />
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <SafeAreaView style={globalStyles.container}>
+        {questionsArray[thisQuestionNumber] && (
+          <>
+            <View style={styles.questionBlock}>
+              <Text style={globalStyles.primaryText}>
+                {questionsArray[thisQuestionNumber].question}
+              </Text>
+            </View>
+            <View style={styles.answersBlock}>{renderAnswers}</View>
+          </>
+        )}
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

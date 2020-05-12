@@ -28,7 +28,7 @@ const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.lightColor,
   },
-  questionsText: {
+  primaryText: {
     fontSize: 22,
     fontFamily: fonts.primaryFont,
     color: colors.lightColor,
