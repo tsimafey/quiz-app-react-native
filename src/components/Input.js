@@ -4,7 +4,7 @@ import {TextInput, StyleSheet} from 'react-native';
 
 import {colors} from '../styles';
 
-const Input = ({placeholder}) => {
+const Input = ({placeholder, value, onChangeText}) => {
   const [statePlaceholder, setStatePlaceholder] = useState(placeholder);
 
   const clearPlaceholder = () => {
@@ -22,6 +22,8 @@ const Input = ({placeholder}) => {
       placeholderTextColor={colors.primaryColor}
       onFocus={clearPlaceholder}
       onBlur={restorePlaceholder}
+      value={value}
+      onChangeText={onChangeText}
     />
   );
 };

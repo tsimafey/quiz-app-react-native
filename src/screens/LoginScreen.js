@@ -1,20 +1,48 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
-import {SafeAreaView, View, StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, View, StyleSheet, Text} from 'react-native';
 
-import Input from '../components/Input';
+import {Input, Button} from '../components';
 
 import globalStyles from '../styles';
 
 const LoginScreen = () => {
+  const authStackNavigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigateToSignup = () => authStackNavigation.navigate('Signup Screen');
+
   return (
-    <SafeAreaView style={globalStyles.container}>
+    <KeyboardAvoidingView style={globalStyles.container} behavior="padding">
       <View style={styles.logoBlock} />
-      <View style={styles.inputsBlock}>
-        <Input placeholder="Email" />
-        <Input placeholder="Password" />
+      <View style={styles.formBlock}>
+        <View style={styles.inputsBlock}>
+          <Input
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <Input
+            placeholder="Password"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          <Button disabled={!email || !password ? true : false}>Log In</Button>
+        </View>
+        <View style={styles.signupButtonBlock}>
+          <Text style={[globalStyles.basicText, styles.signupText]}>
+            Don't have an account yet?
+          </Text>
+          <Button
+            disabled={!email || !password ? false : true}
+            onPress={navigateToSignup}>
+            Sign Up
+          </Button>
+        </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -22,11 +50,28 @@ const styles = StyleSheet.create({
   logoBlock: {
     flex: 1,
   },
-  inputsBlock: {
+  formBlock: {
     flex: 2,
     width: '100%',
     display: 'flex',
+    justifyContent: 'space-between',
+  },
+  inputsBlock: {
+    display: 'flex',
     alignItems: 'center',
+  },
+  signupButtonBlock: {
+    paddingVertical: 20,
+    paddingHorizontal: '10%',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  signupText: {
+    flex: 1,
+    flexWrap: 'wrap',
+    textAlign: 'right',
+    textAlignVertical: 'center',
+    paddingRight: 10,
   },
 });
 

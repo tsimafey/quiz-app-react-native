@@ -34,6 +34,11 @@ const globalStyles = StyleSheet.create({
     color: colors.lightColor,
     textAlign: 'center',
   },
+  basicText: {
+    fontSize: 14,
+    fontFamily: fonts.primaryFont,
+    color: colors.lightColor,
+  },
 });
 
 export default globalStyles;

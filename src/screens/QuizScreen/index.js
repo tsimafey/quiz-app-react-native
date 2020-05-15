@@ -8,7 +8,7 @@ import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
 import useQuestionsArray from '../../hooks/useQuestionsArray';
 
-import Answer from '../../components/Answer';
+import {Answer} from '../../components';
 import QuizScreenHeader from './QuizScreenHeader';
 import FinalScoreModal from './FinalScoreModal';
 
