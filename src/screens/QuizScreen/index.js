@@ -1,8 +1,8 @@
-import React, {useState, useLayoutEffect, useEffect} from 'react';
+import React, {useState, useLayoutEffect, useEffect, useContext} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
 
-import {db} from '../../firebase';
+import {FirebaseContext} from '../../firebase';
 
 import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
@@ -15,6 +15,7 @@ import FinalScoreModal from './FinalScoreModal';
 import globalStyles, {colors} from '../../styles';
 
 const QuizScreen = () => {
+  const firebase = useContext(FirebaseContext);
   const mainStackNavigation = useNavigation();
   const route = useRoute();
   const {topic} = route.params;
@@ -40,7 +41,8 @@ const QuizScreen = () => {
   }, [thisQuestionNumber]);
 
   const assignNewId = (number) => {
-    db.collection(`questions-${topic}`)
+    firebase.db
+      .collection(`questions-${topic}`)
       .doc(`${questionsArray[number].id}`)
       .update({
         randomId: uuidv4(),

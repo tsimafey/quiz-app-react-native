@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect, useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {db} from '../../firebase';
+import {FirebaseContext} from '../../firebase';
 
 import {
   SafeAreaView,
@@ -21,6 +21,7 @@ import globalStyles, {colors, fonts} from '../../styles';
 import icons from '../../../assets/images/icons/topics';
 
 const TopicsScreen = () => {
+  const firebase = useContext(FirebaseContext);
   const mainStackNavigation = useNavigation();
   const [topics, setTopics] = useState([]);
 
@@ -31,7 +32,7 @@ const TopicsScreen = () => {
   });
 
   useEffect(() => {
-    const unsub = db.collection('topics').onSnapshot((snapshot) => {
+    const unsub = firebase.db.collection('topics').onSnapshot((snapshot) => {
       const topicsArray = snapshot.docs.map((doc) => ({
         ...doc.data(),
       }));

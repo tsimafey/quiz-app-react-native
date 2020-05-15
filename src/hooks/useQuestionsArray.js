@@ -1,15 +1,17 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import _ from 'lodash';
 
-import {db} from '../firebase';
+import {FirebaseContext} from '../firebase';
 
 const useQuestionsArray = (topic) => {
+  const firebase = useContext(FirebaseContext);
   const [questionsArray, setQuestionsArray] = useState([]);
 
   useEffect(() => {
     const desc = Math.random() * 10 > 5;
 
-    db.collection(`questions-${topic}`)
+    firebase.db
+      .collection(`questions-${topic}`)
       .orderBy('randomId', desc ? 'desc' : 'asc')
       .limit(10)
       .get()
