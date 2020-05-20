@@ -9,12 +9,12 @@ import AuthStack from './src/navigation/AuthStack';
 const App = () => {
   return (
     <FirebaseContext.Provider value={new Firebase()}>
-      <NavigationContainer>
-        <BottomTab />
-      </NavigationContainer>
       {/* <NavigationContainer>
-        <AuthStack />
+        <BottomTab />
       </NavigationContainer> */}
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
     </FirebaseContext.Provider>
   );
 };

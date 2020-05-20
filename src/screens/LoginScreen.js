@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {KeyboardAvoidingView, View, StyleSheet, Text} from 'react-native';
-
-import {Input, Button} from '../components';
-
-import globalStyles from '../styles';
+import {CredentialsForm} from '../components';
 
 const LoginScreen = () => {
   const authStackNavigation = useNavigation();
@@ -15,64 +11,22 @@ const LoginScreen = () => {
   const navigateToSignup = () => authStackNavigation.navigate('Signup Screen');
 
   return (
-    <KeyboardAvoidingView style={globalStyles.container} behavior="padding">
-      <View style={styles.logoBlock} />
-      <View style={styles.formBlock}>
-        <View style={styles.inputsBlock}>
-          <Input
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-          <Input
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-          <Button disabled={!email || !password ? true : false}>Log In</Button>
-        </View>
-        <View style={styles.signupButtonBlock}>
-          <Text style={[globalStyles.basicText, styles.signupText]}>
-            Don't have an account yet?
-          </Text>
-          <Button
-            disabled={!email || !password ? false : true}
-            onPress={navigateToSignup}>
-            Sign Up
-          </Button>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+    <CredentialsForm
+      valueEmail={email}
+      onChangeTextEmail={(text) => setEmail(text)}
+      textContentTypeEmail="emailAddress"
+      valuePassword={password}
+      onChangeTextPassword={(text) => setPassword(text)}
+      textContentTypePassword="password"
+      mainButtonText="Log In"
+      mainButtonOnPress={() => {}}
+      mainButtonDisabledCondition={!email || !password ? true : false}
+      bottomText="Don't have an account yet?"
+      bottomButtonText="Sign Up"
+      bottomButtonOnPress={navigateToSignup}
+      bottomButtonDisabledCondition={!email || !password ? false : true}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  logoBlock: {
-    flex: 1,
-  },
-  formBlock: {
-    flex: 2,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  inputsBlock: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  signupButtonBlock: {
-    paddingVertical: 20,
-    paddingHorizontal: '10%',
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  signupText: {
-    flex: 1,
-    flexWrap: 'wrap',
-    textAlign: 'right',
-    textAlignVertical: 'center',
-    paddingRight: 10,
-  },
-});
 
 export default LoginScreen;
