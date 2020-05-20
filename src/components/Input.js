@@ -4,7 +4,7 @@ import {TextInput, StyleSheet} from 'react-native';
 
 import {colors} from '../styles';
 
-const Input = ({placeholder, value, onChangeText}) => {
+const Input = ({placeholder, value, onChangeText, secureTextEntry}) => {
   const [statePlaceholder, setStatePlaceholder] = useState(placeholder);
 
   const clearPlaceholder = () => {
@@ -24,6 +24,8 @@ const Input = ({placeholder, value, onChangeText}) => {
       onBlur={restorePlaceholder}
       value={value}
       onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry}
+      autoCapitalize="none"
     />
   );
 };

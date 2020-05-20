@@ -9,10 +9,8 @@ import globalStyles from '../styles';
 const CredentialsForm = ({
   valueEmail,
   onChangeTextEmail,
-  textContentTypeEmail,
   valuePassword,
   onChangeTextPassword,
-  textContentTypePassword,
   mainButtonText,
   mainButtonOnPress,
   mainButtonDisabledCondition,
@@ -30,13 +28,12 @@ const CredentialsForm = ({
             placeholder="Email"
             value={valueEmail}
             onChangeText={onChangeTextEmail}
-            textContentType={textContentTypeEmail}
           />
           <Input
             placeholder="Password"
             value={valuePassword}
             onChangeText={onChangeTextPassword}
-            textContentType={textContentTypePassword}
+            secureTextEntry={true}
           />
           <Button
             disabled={mainButtonDisabledCondition}

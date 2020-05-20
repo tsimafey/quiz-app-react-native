@@ -14,10 +14,8 @@ const LoginScreen = () => {
     <CredentialsForm
       valueEmail={email}
       onChangeTextEmail={(text) => setEmail(text)}
-      textContentTypeEmail="emailAddress"
       valuePassword={password}
       onChangeTextPassword={(text) => setPassword(text)}
-      textContentTypePassword="password"
       mainButtonText="Log In"
       mainButtonOnPress={() => {}}
       mainButtonDisabledCondition={!email || !password ? true : false}
