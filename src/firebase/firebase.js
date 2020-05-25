@@ -24,7 +24,9 @@ const config = {
 
 class Firebase {
   constructor() {
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
     firebase.firestore().settings({experimentalForceLongPolling: true});
     this.auth = firebase.auth();
     this.db = firebase.firestore();
@@ -32,6 +34,21 @@ class Firebase {
 
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
+
+  doSignInWithEmailAndPassword = (email, password) =>
+    this.auth.signInWithEmailAndPassword(email, password);
+
+  doLogOut = () => this.auth.signOut();
+
+  onAuthUserListener = (next, fallback) => {
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        next(user);
+      } else {
+        fallback();
+      }
+    });
+  };
 }
 
 export default Firebase;

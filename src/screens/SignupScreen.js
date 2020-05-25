@@ -13,8 +13,6 @@ const SignupScreen = () => {
 
   const navigateToLogin = () => authStackNavigation.navigate('Login Screen');
 
-  console.log(firebase);
-
   const signUp = () => {
     firebase.doCreateUserWithEmailAndPassword(email, password);
   };

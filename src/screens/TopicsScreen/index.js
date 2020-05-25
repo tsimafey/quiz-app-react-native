@@ -39,7 +39,7 @@ const TopicsScreen = () => {
       setTopics(topicsArray);
     });
     return () => unsub();
-  }, []);
+  }, [firebase]);
 
   const navigateToQuiz = (id) =>
     mainStackNavigation.navigate('Quiz', {
