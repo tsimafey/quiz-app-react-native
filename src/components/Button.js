@@ -10,11 +10,11 @@ import {
 
 import globalStyles, {colors} from '../styles';
 
-const Button = ({disabled, children, onPress}) => {
+const Button = ({disabled, children, onPress, style}) => {
   if (disabled) {
     return (
       <TouchableWithoutFeedback>
-        <View style={[styles.button, styles.disabledButton]}>
+        <View style={[styles.button, styles.disabledButton, style]}>
           <Text style={[globalStyles.primaryText, styles.disabledButtonText]}>
             {children}
           </Text>
@@ -24,7 +24,7 @@ const Button = ({disabled, children, onPress}) => {
   } else {
     return (
       <TouchableOpacity
-        style={[styles.button, styles.enabledButton]}
+        style={[styles.button, styles.enabledButton, style]}
         onPress={onPress}>
         <Text style={globalStyles.primaryText}>{children}</Text>
       </TouchableOpacity>

@@ -7,6 +7,7 @@ export const colors = {
   highlightColor: 'hsl(45, 99%, 71%)',
   positiveColor: 'hsl(90, 80%, 30%)',
   negativeColor: 'hsl(0, 75%, 40%)',
+  negativeColorBright: 'hsl(0, 95%, 50%)',
 };
 
 export const fonts = {
@@ -35,7 +36,7 @@ const globalStyles = StyleSheet.create({
     textAlign: 'center',
   },
   basicText: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: fonts.primaryFont,
     color: colors.lightColor,
   },

@@ -4,7 +4,7 @@ import {KeyboardAvoidingView, View, StyleSheet, Text} from 'react-native';
 
 import {Input, Button} from './';
 
-import globalStyles from '../styles';
+import globalStyles, {colors} from '../styles';
 
 const CredentialsForm = ({
   valueEmail,
@@ -18,6 +18,7 @@ const CredentialsForm = ({
   bottomButtonText,
   bottomButtonOnPress,
   bottomButtonDisabledCondition,
+  errorText,
 }) => {
   return (
     <KeyboardAvoidingView style={globalStyles.container} behavior="padding">
@@ -37,9 +38,15 @@ const CredentialsForm = ({
           />
           <Button
             disabled={mainButtonDisabledCondition}
-            onPress={mainButtonOnPress}>
+            onPress={mainButtonOnPress}
+            style={styles.mainButton}>
             {mainButtonText}
           </Button>
+          {errorText && (
+            <Text style={[globalStyles.basicText, styles.errorText]}>
+              {errorText}
+            </Text>
+          )}
         </View>
         <View style={styles.bottomButtonBlock}>
           <Text style={[globalStyles.basicText, styles.bottomText]}>
@@ -70,6 +77,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
+  mainButton: {
+    marginBottom: 10,
+  },
   bottomButtonBlock: {
     paddingVertical: 20,
     paddingHorizontal: '10%',
@@ -82,6 +92,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     textAlignVertical: 'center',
     paddingRight: 10,
+  },
+  errorText: {
+    color: colors.negativeColorBright,
   },
 });
 

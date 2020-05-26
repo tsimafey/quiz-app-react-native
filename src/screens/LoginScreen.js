@@ -10,19 +10,32 @@ const LoginScreen = () => {
   const authStackNavigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const onChangeTextEmail = (text) => {
+    setError(null);
+    setEmail(text);
+  };
+
+  const onChangeTextPassword = (text) => {
+    setError(null);
+    setPassword(text);
+  };
 
   const navigateToSignup = () => authStackNavigation.navigate('Signup Screen');
 
   const logIn = () => {
-    firebase.doSignInWithEmailAndPassword(email, password);
+    firebase.doSignInWithEmailAndPassword(email, password).catch((e) => {
+      setError(e.message);
+    });
   };
 
   return (
     <CredentialsForm
       valueEmail={email}
-      onChangeTextEmail={(text) => setEmail(text)}
+      onChangeTextEmail={onChangeTextEmail}
       valuePassword={password}
-      onChangeTextPassword={(text) => setPassword(text)}
+      onChangeTextPassword={onChangeTextPassword}
       mainButtonText="Log In"
       mainButtonOnPress={logIn}
       mainButtonDisabledCondition={!email || !password ? true : false}
@@ -30,6 +43,7 @@ const LoginScreen = () => {
       bottomButtonText="Sign Up"
       bottomButtonOnPress={navigateToSignup}
       bottomButtonDisabledCondition={!email || !password ? false : true}
+      errorText={error}
     />
   );
 };
