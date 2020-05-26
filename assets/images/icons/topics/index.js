@@ -1,8 +1,8 @@
 const icons = {
-  nba: require('./nba.png'),
-  atp: require('./atp.png'),
-  soccer: require('./soccer.png'),
-  mlb: require('./mlb.png'),
+  nba: 'ios-basketball',
+  atp: 'ios-tennisball',
+  soccer: 'ios-football',
+  mlb: 'ios-baseball',
 };
 
 export default icons;

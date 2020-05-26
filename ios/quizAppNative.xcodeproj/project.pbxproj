@@ -19,6 +19,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* quizAppNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* quizAppNativeTests.m */; };
 		507B9DD9F4D94A2D0FD78853 /* libPods-quizAppNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C476BB60696753379A2B9CA /* libPods-quizAppNative-tvOS.a */; };
 		93CA2D082463068B005AED0D /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CA2D072463068B005AED0D /* Manrope-Regular.ttf */; };
+		93D428C3247CF85B004845E7 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93D428C2247CF85B004845E7 /* Ionicons.ttf */; };
+		93D428C5247D1373004845E7 /* PermanentMarker-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93D428C4247D1372004845E7 /* PermanentMarker-Regular.ttf */; };
 		9E31292C604906F03A2F63DA /* libPods-quizAppNative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 686CFC43B3B0E51EC5AD17B7 /* libPods-quizAppNative-tvOSTests.a */; };
 		B511CAE8A6801350464B0498 /* libPods-quizAppNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 900647BC70121CA1770E0711 /* libPods-quizAppNative.a */; };
 /* End PBXBuildFile section */
@@ -62,6 +64,8 @@
 		75FBF4CE0311BEA9D7FE5054 /* Pods-quizAppNative-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizAppNative-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-quizAppNative-tvOS/Pods-quizAppNative-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		900647BC70121CA1770E0711 /* libPods-quizAppNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quizAppNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CA2D072463068B005AED0D /* Manrope-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Manrope-Regular.ttf"; path = "../assets/fonts/Manrope-Regular.ttf"; sourceTree = "<group>"; };
+		93D428C2247CF85B004845E7 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		93D428C4247D1372004845E7 /* PermanentMarker-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PermanentMarker-Regular.ttf"; path = "../assets/fonts/PermanentMarker-Regular.ttf"; sourceTree = "<group>"; };
 		A6D630894503F6584009FE11 /* Pods-quizAppNative-quizAppNativeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizAppNative-quizAppNativeTests.release.xcconfig"; path = "Target Support Files/Pods-quizAppNative-quizAppNativeTests/Pods-quizAppNative-quizAppNativeTests.release.xcconfig"; sourceTree = "<group>"; };
 		D658842395CE2F0902831197 /* Pods-quizAppNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizAppNative.debug.xcconfig"; path = "Target Support Files/Pods-quizAppNative/Pods-quizAppNative.debug.xcconfig"; sourceTree = "<group>"; };
 		E33D854503C5AEA0205BBC2F /* Pods-quizAppNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizAppNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-quizAppNative-tvOS/Pods-quizAppNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -188,6 +192,8 @@
 		93CA2D062463065F005AED0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93D428C2247CF85B004845E7 /* Ionicons.ttf */,
+				93D428C4247D1372004845E7 /* PermanentMarker-Regular.ttf */,
 				93CA2D072463068B005AED0D /* Manrope-Regular.ttf */,
 			);
 			name = Resources;
@@ -350,6 +356,8 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				93D428C3247CF85B004845E7 /* Ionicons.ttf in Resources */,
+				93D428C5247D1373004845E7 /* PermanentMarker-Regular.ttf in Resources */,
 				93CA2D082463068B005AED0D /* Manrope-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

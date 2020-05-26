@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   FlatList,
   Text,
-  Image,
   StyleSheet,
   Dimensions,
   Platform,
 } from 'react-native';
 
+import {TopicIcon} from '../../components';
 import TopicsScreenHeader from './TopicsScreenHeader';
 
 import globalStyles, {colors, fonts} from '../../styles';
@@ -52,7 +52,7 @@ const TopicsScreen = () => {
         onPress={() => navigateToQuiz(item.id)}
         style={styles.listItem}>
         <View style={styles.listItemImage}>
-          <Image style={styles.listItemIcon} source={icons[item.id]} />
+          <TopicIcon name={icons[item.id]} />
         </View>
         <Text style={styles.listItemTitle}>{item.title}</Text>
       </TouchableOpacity>
@@ -87,26 +87,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listItemImage: {
-    width: 90,
-    height: 90,
-    borderWidth: 3,
-    borderColor: colors.highlightColor,
-    borderRadius: 50,
-    overflow: 'hidden',
+    width: 100,
+    height: 100,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  listItemIcon: {
-    resizeMode: 'contain',
-    height: 45,
-  },
   listItemTitle: {
     marginTop: 5,
     textTransform: 'uppercase',
-    fontSize: 20,
-    color: colors.lightColor,
-    fontFamily: fonts.primaryFont,
+    fontSize: 25,
+    color: colors.highlightColor,
+    fontFamily: fonts.highlightFont,
   },
 });
 

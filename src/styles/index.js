@@ -12,6 +12,7 @@ export const colors = {
 
 export const fonts = {
   primaryFont: 'Manrope-Regular',
+  highlightFont: 'PermanentMarker-Regular',
 };
 
 const globalStyles = StyleSheet.create({

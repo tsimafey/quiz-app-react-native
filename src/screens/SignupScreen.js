@@ -26,6 +26,7 @@ const SignupScreen = () => {
 
   const signUp = () => {
     firebase.doCreateUserWithEmailAndPassword(email, password).catch((e) => {
+      setPassword('');
       setError(e.message);
     });
   };

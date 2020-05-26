@@ -2,13 +2,13 @@ import React, {useContext} from 'react';
 
 import {FirebaseContext} from '../firebase';
 
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 
 import {BottomTab} from '../components';
 
 import {colors} from '../styles';
 
-const BottomTabBar = ({state, descriptors, navigation}) => {
+const BottomTabBar = ({state, descriptors, navigation, icon}) => {
   const firebase = useContext(FirebaseContext);
 
   const logOut = () => {
@@ -49,15 +49,17 @@ const BottomTabBar = ({state, descriptors, navigation}) => {
 
         return (
           <BottomTab
+            key={route.key}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             isFocused={isFocused}
             onPress={onPress}
             onLongPress={onLongPress}
             text={label}
+            icon={options.icon}
           />
         );
       })}
-      <BottomTab onPress={logOut} text="Log Out" />
+      <BottomTab onPress={logOut} icon="ios-walk" text="Log Out" />
     </View>
   );
 };
@@ -65,10 +67,11 @@ const BottomTabBar = ({state, descriptors, navigation}) => {
 const styles = StyleSheet.create({
   bottomTabBarBlock: {
     backgroundColor: colors.highlightColor,
-    height: 70,
+    height: 85,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    paddingBottom: Platform.OS === 'ios' ? 15 : 0,
   },
 });
 
