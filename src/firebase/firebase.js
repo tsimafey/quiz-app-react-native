@@ -49,6 +49,8 @@ class Firebase {
       }
     });
   };
+
+  user = (uid) => this.db.ref(`/users/${uid}`);
 }
 
 export default Firebase;

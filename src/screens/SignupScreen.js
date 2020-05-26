@@ -25,10 +25,17 @@ const SignupScreen = () => {
   const navigateToLogin = () => authStackNavigation.navigate('Login Screen');
 
   const signUp = () => {
-    firebase.doCreateUserWithEmailAndPassword(email, password).catch((e) => {
-      setPassword('');
-      setError(e.message);
-    });
+    firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        firebase.db.user(authUser.user.uid).set({
+          email,
+        });
+      })
+      .catch((e) => {
+        setPassword('');
+        setError(e.message);
+      });
   };
 
   return (
