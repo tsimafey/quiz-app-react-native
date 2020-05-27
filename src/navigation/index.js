@@ -1,33 +1,23 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {FirebaseContext} from '../firebase';
+import {FirebaseContext, AuthContext} from '../firebase';
+
+import useAuthUser from '../hooks/useAuthUser';
 
 import BottomStack from './BottomStack';
 import AuthStack from './AuthStack';
 
 const Navigation = () => {
-  const [user, setUser] = useState(null);
   const firebase = useContext(FirebaseContext);
-
-  console.log(user);
-  console.log(firebase);
-
-  useEffect(() => {
-    firebase.onAuthUserListener(
-      (authUser) => {
-        setUser(authUser);
-      },
-      () => {
-        setUser(null);
-      },
-    );
-  }, [firebase]);
+  const authUser = useAuthUser(firebase);
 
   return (
-    <NavigationContainer>
-      {user ? <BottomStack /> : <AuthStack />}
-    </NavigationContainer>
+    <AuthContext.Provider value={authUser}>
+      <NavigationContainer>
+        {authUser ? <BottomStack /> : <AuthStack />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 };
 

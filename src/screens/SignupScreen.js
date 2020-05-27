@@ -28,9 +28,17 @@ const SignupScreen = () => {
     firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then((authUser) => {
-        firebase.db.user(authUser.user.uid).set({
-          email,
-        });
+        firebase
+          .user(authUser.user.uid)
+          .set({
+            email,
+          })
+          .then(() => {
+            console.log(authUser.user.uid);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((e) => {
         setPassword('');

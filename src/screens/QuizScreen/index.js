@@ -2,11 +2,11 @@ import React, {useState, useLayoutEffect, useEffect, useContext} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
 
-import {FirebaseContext} from '../../firebase';
+import {FirebaseContext, AuthContext} from '../../firebase';
 
 import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
-import useQuestionsArray from '../../hooks/useQuestionsArray';
+import {useQuestionsArray, useLevel} from '../../hooks';
 
 import {Answer} from '../../components';
 import QuizScreenHeader from './QuizScreenHeader';
@@ -16,11 +16,13 @@ import globalStyles, {colors} from '../../styles';
 
 const QuizScreen = () => {
   const firebase = useContext(FirebaseContext);
+  const authUser = useContext(AuthContext);
   const mainStackNavigation = useNavigation();
   const route = useRoute();
-  const {topic} = route.params;
+  const {topic, specifiedLevel} = route.params;
+  const level = useLevel(authUser, specifiedLevel, topic);
   const questionsNumber = 10;
-  const [questionsArray, setQuestionsArray] = useQuestionsArray(topic);
+  const [questionsArray, setQuestionsArray] = useQuestionsArray(topic, level);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
   const [maxScoreForAnswer, setMaxScoreForAnswer] = useState(3);
@@ -42,7 +44,9 @@ const QuizScreen = () => {
 
   const assignNewId = (number) => {
     firebase.db
-      .collection(`questions-${topic}`)
+      .collection('questions')
+      .doc(`${topic}`)
+      .collection(`level-${level}`)
       .doc(`${questionsArray[number].id}`)
       .update({
         randomId: uuidv4(),

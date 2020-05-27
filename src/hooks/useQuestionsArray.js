@@ -3,38 +3,41 @@ import _ from 'lodash';
 
 import {FirebaseContext} from '../firebase';
 
-const useQuestionsArray = (topic) => {
+const useQuestionsArray = (topic, level) => {
   const firebase = useContext(FirebaseContext);
   const [questionsArray, setQuestionsArray] = useState([]);
 
   useEffect(() => {
     const desc = Math.random() * 10 > 5;
-
-    firebase.db
-      .collection(`questions-${topic}`)
-      .orderBy('randomId', desc ? 'desc' : 'asc')
-      .limit(10)
-      .get()
-      .then((snapshot) => {
-        const newQuestionsArray = [];
-        snapshot.forEach((doc) => {
-          newQuestionsArray.push({id: doc.id, ...doc.data()});
+    if (level) {
+      firebase.db
+        .collection('questions')
+        .doc(`${topic}`)
+        .collection(`level-${level}`)
+        .orderBy('randomId', desc ? 'desc' : 'asc')
+        .limit(10)
+        .get()
+        .then((snapshot) => {
+          const newQuestionsArray = [];
+          snapshot.forEach((doc) => {
+            newQuestionsArray.push({id: doc.id, ...doc.data()});
+          });
+          return newQuestionsArray;
+        })
+        .then((newQuestionsArray) => {
+          return newQuestionsArray.map((question) => {
+            question.answers = _.shuffle(question.answers).map((answer) => ({
+              ...answer,
+              isDisabled: false,
+            }));
+            return question;
+          });
+        })
+        .then((newQuestionsArrayShuffled) => {
+          setQuestionsArray(newQuestionsArrayShuffled);
         });
-        return newQuestionsArray;
-      })
-      .then((newQuestionsArray) => {
-        return newQuestionsArray.map((question) => {
-          question.answers = _.shuffle(question.answers).map((answer) => ({
-            ...answer,
-            isDisabled: false,
-          }));
-          return question;
-        });
-      })
-      .then((newQuestionsArrayShuffled) => {
-        setQuestionsArray(newQuestionsArrayShuffled);
-      });
-  }, [topic]);
+    }
+  }, [topic, firebase, level]);
 
   return [questionsArray, setQuestionsArray];
 };
