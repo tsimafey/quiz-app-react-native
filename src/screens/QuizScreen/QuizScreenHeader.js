@@ -9,13 +9,19 @@ import {
 
 import Header from '../../navigation/Header';
 
-import globalStyles, {colors} from '../../styles';
+import globalStyles, {colors, fonts} from '../../styles';
 
-const QuizScreenHeader = ({score, navigation}) => {
+const QuizScreenHeader = ({topic, score, level, bestScore, navigation}) => {
   return (
     <Header>
       <View style={styles.quizScreenHeaderBlock}>
         <Text style={globalStyles.headerText}>Score: {score}</Text>
+        <View>
+          <Text style={styles.headerSmallText}>
+            {topic} Level {level}
+          </Text>
+          <Text style={styles.headerSmallText}>Best score: {bestScore}</Text>
+        </View>
         <TouchableOpacity style={styles.crossBlock} onPress={navigation.goBack}>
           <Text style={styles.crossText}>&#xd7;</Text>
         </TouchableOpacity>
@@ -34,6 +40,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  headerSmallText: {
+    fontFamily: fonts.primaryFont,
+    textTransform: 'uppercase',
+    fontSize: 14,
+    color: colors.highlightColor,
   },
   crossBlock: {
     top: -8,

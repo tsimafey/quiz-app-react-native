@@ -22,6 +22,7 @@ const useLevel = (authUser, specifiedLevel, topic) => {
         setLevel(1);
         firebase.user(authUser.uid).collection('results').doc(`${topic}`).set({
           level: 1,
+          'level-1': 0,
         });
       });
   }

@@ -6,7 +6,7 @@ import {FirebaseContext, AuthContext} from '../../firebase';
 
 import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
-import {useQuestionsArray, useLevel} from '../../hooks';
+import {useQuestionsArray, useLevel, useBestScore} from '../../hooks';
 
 import {Answer} from '../../components';
 import QuizScreenHeader from './QuizScreenHeader';
@@ -21,6 +21,7 @@ const QuizScreen = () => {
   const route = useRoute();
   const {topic, specifiedLevel} = route.params;
   const level = useLevel(authUser, specifiedLevel, topic);
+  const bestScore = useBestScore(authUser, topic, level);
   const questionsNumber = 10;
   const [questionsArray, setQuestionsArray] = useQuestionsArray(topic, level);
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
@@ -31,7 +32,13 @@ const QuizScreen = () => {
   useLayoutEffect(() => {
     mainStackNavigation.setOptions({
       header: ({navigation}) => (
-        <QuizScreenHeader score={score} navigation={navigation} />
+        <QuizScreenHeader
+          topic={topic}
+          score={score}
+          level={level}
+          bestScore={bestScore}
+          navigation={navigation}
+        />
       ),
     });
   });
