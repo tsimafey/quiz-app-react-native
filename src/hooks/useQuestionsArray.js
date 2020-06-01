@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import {FirebaseContext} from '../firebase';
 
-const useQuestionsArray = (topic, level) => {
+const useQuestionsArray = (topic, level, questionsNumber) => {
   const firebase = useContext(FirebaseContext);
   const [questionsArray, setQuestionsArray] = useState([]);
 
@@ -15,7 +15,7 @@ const useQuestionsArray = (topic, level) => {
         .doc(`${topic}`)
         .collection(`level-${level}`)
         .orderBy('randomId', desc ? 'desc' : 'asc')
-        .limit(10)
+        .limit(questionsNumber)
         .get()
         .then((snapshot) => {
           const newQuestionsArray = [];

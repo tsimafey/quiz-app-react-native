@@ -4,10 +4,9 @@ import {Modal, View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 import globalStyles, {colors, fonts} from '../../styles';
 
-const FinalScoreModal = ({isVisible, score, navigation, closeModal}) => {
+const FinalScoreModal = ({isVisible, score, closeModal}) => {
   const close = () => {
     closeModal();
-    navigation.goBack();
   };
 
   return (

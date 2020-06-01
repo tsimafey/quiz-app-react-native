@@ -2,7 +2,7 @@ import React, {useState, useLayoutEffect, useEffect, useContext} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {v4 as uuidv4} from 'uuid';
 
-import {FirebaseContext, AuthContext} from '../../firebase';
+import {FirebaseContext, AuthContext, changeLevel} from '../../firebase';
 
 import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 
@@ -22,8 +22,12 @@ const QuizScreen = () => {
   const {topic, specifiedLevel} = route.params;
   const level = useLevel(authUser, specifiedLevel, topic);
   const bestScore = useBestScore(authUser, topic, level);
-  const questionsNumber = 10;
-  const [questionsArray, setQuestionsArray] = useQuestionsArray(topic, level);
+  const questionsNumber = 20;
+  const [questionsArray, setQuestionsArray] = useQuestionsArray(
+    topic,
+    level,
+    questionsNumber,
+  );
   const [thisQuestionNumber, setThisQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
   const [maxScoreForAnswer, setMaxScoreForAnswer] = useState(3);
@@ -96,7 +100,18 @@ const QuizScreen = () => {
   ));
 
   const closeModal = () => {
+    if (score > bestScore) {
+      firebase
+        .user(authUser.uid)
+        .collection('results')
+        .doc(`${topic}`)
+        .update({
+          [`level-${level}`]: score,
+        });
+      changeLevel(firebase, authUser, topic, level);
+    }
     setIsFinalModalVisible(false);
+    mainStackNavigation.goBack();
   };
 
   if (isFinalModalVisible) {
@@ -105,7 +120,6 @@ const QuizScreen = () => {
         <FinalScoreModal
           isVisible={isFinalModalVisible}
           score={score}
-          navigation={mainStackNavigation}
           route={route}
           closeModal={closeModal}
         />
