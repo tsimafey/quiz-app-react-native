@@ -20,7 +20,7 @@ const QuizScreen = () => {
   const mainStackNavigation = useNavigation();
   const route = useRoute();
   const {topic, specifiedLevel} = route.params;
-  const level = useLevel(authUser, specifiedLevel, topic);
+  const level = useLevel(authUser, topic, specifiedLevel);
   const bestScore = useBestScore(authUser, topic, level);
   const questionsNumber = 20;
   const [questionsArray, setQuestionsArray] = useQuestionsArray(
@@ -99,19 +99,19 @@ const QuizScreen = () => {
     <Answer answer={answer} handleAnswer={handleAnswer} key={answer.text} />
   ));
 
-  const closeModal = () => {
+  const closeModal = async () => {
     if (score > bestScore) {
-      firebase
+      await firebase
         .user(authUser.uid)
         .collection('results')
         .doc(`${topic}`)
         .update({
           [`level-${level}`]: score,
         });
-      changeLevel(firebase, authUser, topic, level);
+      await changeLevel(firebase, authUser, topic, level);
     }
-    setIsFinalModalVisible(false);
-    mainStackNavigation.goBack();
+    await setIsFinalModalVisible(false);
+    await mainStackNavigation.goBack();
   };
 
   if (isFinalModalVisible) {

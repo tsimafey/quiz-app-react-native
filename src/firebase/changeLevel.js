@@ -1,5 +1,5 @@
 const calculatePoints = async (firebase, authUser, topic) => {
-  let counter = await 0;
+  let pointsCounter = await 0;
 
   await firebase
     .user(authUser.uid)
@@ -10,19 +10,25 @@ const calculatePoints = async (firebase, authUser, topic) => {
       const data = snapshot.data();
       for (let i = 1; i <= 10; i++) {
         if (data[`level-${i}`]) {
-          counter = counter + data[`level-${i}`];
+          pointsCounter = pointsCounter + data[`level-${i}`];
         } else {
           break;
         }
       }
+    })
+    .then(() => {
+      firebase.user(authUser.uid).collection('results').doc(`${topic}`).update({
+        points: pointsCounter,
+      });
     });
 
-  return await counter;
+  return await pointsCounter;
 };
 
 const calculateLevel = async (firebase, authUser, topic) => {
   const valuesArray = await [30, 70, 125, 190, 260, 330, 400, 470, 540];
   const counter = await calculatePoints(firebase, authUser, topic);
+  console.log(counter);
   if (counter < valuesArray[0]) {
     return 1;
   } else if (counter >= valuesArray[0] && counter < valuesArray[1]) {

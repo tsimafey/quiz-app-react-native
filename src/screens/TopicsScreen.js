@@ -1,24 +1,22 @@
 import React, {useState, useEffect, useLayoutEffect, useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {FirebaseContext} from '../../firebase';
+import {FirebaseContext} from '../firebase';
 
 import {
   SafeAreaView,
-  View,
   TouchableOpacity,
   FlatList,
-  Text,
   StyleSheet,
   Dimensions,
   Platform,
 } from 'react-native';
 
-import {TopicIcon} from '../../components';
-import TopicsScreenHeader from './TopicsScreenHeader';
+import DefaultHeader from '../navigation/DefaultHeader';
+import TopicIconWithTitle from '../components/TopicIconWithTitle';
 
-import globalStyles, {colors, fonts} from '../../styles';
-import icons from '../../../assets/images/icons/topics';
+import globalStyles from '../styles';
+import icons from '../../assets/images/icons/topics';
 
 const TopicsScreen = () => {
   const firebase = useContext(FirebaseContext);
@@ -27,7 +25,7 @@ const TopicsScreen = () => {
 
   useLayoutEffect(() => {
     mainStackNavigation.setOptions({
-      header: () => <TopicsScreenHeader />,
+      header: () => <DefaultHeader />,
     });
   });
 
@@ -46,15 +44,19 @@ const TopicsScreen = () => {
       topic: id,
     });
 
+  const navigateToTopicResults = (id, title) =>
+    mainStackNavigation.navigate('Topic Results', {
+      id,
+      title,
+    });
+
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         onPress={() => navigateToQuiz(item.id)}
+        onLongPress={() => navigateToTopicResults(item.id, item.title)}
         style={styles.listItem}>
-        <View style={styles.listItemImage}>
-          <TopicIcon name={icons[item.id]} />
-        </View>
-        <Text style={styles.listItemTitle}>{item.title}</Text>
+        <TopicIconWithTitle name={icons[item.id]} title={item.title} />
       </TouchableOpacity>
     );
   };
@@ -83,22 +85,6 @@ const styles = StyleSheet.create({
   listItem: {
     width: windowWidth / 3,
     marginBottom: 20,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  listItemImage: {
-    width: 100,
-    height: 100,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  listItemTitle: {
-    marginTop: 5,
-    textTransform: 'uppercase',
-    fontSize: 25,
-    color: colors.highlightColor,
-    fontFamily: fonts.highlightFont,
   },
 });
 
