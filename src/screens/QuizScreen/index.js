@@ -131,7 +131,8 @@ const QuizScreen = () => {
         {questionsArray[thisQuestionNumber] && (
           <>
             <View style={styles.questionBlock}>
-              <Text style={globalStyles.primaryText}>
+              <Text
+                style={[globalStyles.primaryText, globalStyles.centeredText]}>
                 {questionsArray[thisQuestionNumber].question}
               </Text>
             </View>

@@ -3,6 +3,7 @@ import useLevel from './useLevel';
 import useQuestionsArray from './useQuestionsArray';
 import useBestScore from './useBestScore';
 import useTopicResults from './useTopicResults';
+import useTopicResultsList from './useTopicResultsList';
 
 export {
   useAuthUser,
@@ -10,4 +11,5 @@ export {
   useQuestionsArray,
   useBestScore,
   useTopicResults,
+  useTopicResultsList,
 };

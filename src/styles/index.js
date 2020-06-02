@@ -34,12 +34,14 @@ const globalStyles = StyleSheet.create({
     fontSize: 22,
     fontFamily: fonts.primaryFont,
     color: colors.lightColor,
-    textAlign: 'center',
   },
   basicText: {
     fontSize: 16,
     fontFamily: fonts.primaryFont,
     color: colors.lightColor,
+  },
+  centeredText: {
+    textAlign: 'center',
   },
 });
 
