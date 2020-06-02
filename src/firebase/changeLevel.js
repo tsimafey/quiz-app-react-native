@@ -61,7 +61,6 @@ const changeLevel = async (firebase, authUser, topic, level) => {
       .doc(`${topic}`)
       .update({
         level: newLevel,
-        [`level-${newLevel}`]: 0,
       });
   }
 };
