@@ -15,8 +15,8 @@ const MainStackScreen = () => {
       screenOptions={{
         header: () => <Header />,
       }}>
-      <MainStack.Screen name="Topics Screen" component={TopicsScreen} />
-      <MainStack.Screen name="Topic Results" component={TopicResultsScreen} />
+      <MainStack.Screen name="Topics" component={TopicsScreen} />
+      <MainStack.Screen name="TopicResults" component={TopicResultsScreen} />
       <MainStack.Screen name="Quiz" component={QuizScreen} />
     </MainStack.Navigator>
   );

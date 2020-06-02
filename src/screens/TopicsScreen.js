@@ -45,7 +45,7 @@ const TopicsScreen = () => {
     });
 
   const navigateToTopicResults = (id, title) =>
-    mainStackNavigation.navigate('Topic Results', {
+    mainStackNavigation.navigate('TopicResults', {
       id,
       title,
     });

@@ -111,7 +111,7 @@ const QuizScreen = () => {
       await changeLevel(firebase, authUser, topic, level);
     }
     await setIsFinalModalVisible(false);
-    await mainStackNavigation.goBack();
+    await mainStackNavigation.navigate('Topics');
   };
 
   if (isFinalModalVisible) {
